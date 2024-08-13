@@ -12,6 +12,9 @@ body {
 header {
   text-align: center;
 }
+header h1 {
+  text-transform: uppercase;
+}
 
 main {
   margin-top: 20vh;
