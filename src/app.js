@@ -1,23 +1,27 @@
 const timer = document.querySelector(".timer");
+const start = document.querySelector(".start");
+const stop = document.querySelector(".stop");
+const finish = document.querySelector(".finish");
 
 class Timer {
-  constructor(countFrom) {
+  constructor(countFrom, element) {
     this.countFrom = countFrom;
+    this.element = element;
   }
 
   setTimer() {
-    return `${this.countFrom} : 00`;
+    return (this.element.textContent = `${this.countFrom} : 00`);
   }
 
   startTimer() {
-    var minutes = this.countFrom;
-    var seconds = 0;
+    let minutes = this.countFrom;
+    let seconds = 0;
 
-    countdown = setInterval(() => {
+    const countdown = setInterval(() => {
       if (seconds === 0) {
         if (minutes === 0) {
           alert("Koniec");
-          clearInterval(countDown);
+          clearInterval(countdown);
           timer.textContent = "5 : 00";
         } else {
           minutes--;
@@ -27,14 +31,30 @@ class Timer {
         seconds--;
       }
 
-      console.log(minutes, seconds);
-      timer.textContent = `${minutes} : ${seconds}`;
-      document.title = `${minutes}:${seconds} - Pomodoro Timer`;
+      timer.textContent = `${minutes >= 10 ? minutes : `0${minutes}`} : ${
+        seconds >= 10 ? seconds : `0${seconds}`
+      }`;
+
+      finish.addEventListener("click", () => {
+        stop.classList.remove("active");
+        start.classList.add("active");
+        clearInterval(countdown);
+        this.element.textContent = this.setTimer();
+      });
     }, 1000);
   }
 }
 
-const countDown = new Timer(25);
+const countDown = new Timer(25, timer);
 
-console.log(countDown.startTimer());
-timer.textContent = countDown.setTimer();
+countDown.setTimer();
+
+start.addEventListener("click", (e) => {
+  if (e.target.classList.contains("active")) {
+    e.target.classList.remove("active");
+    stop.classList.add("active");
+
+    timer.textContent = "25 : 00";
+    countDown.startTimer();
+  }
+});

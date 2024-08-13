@@ -1,7 +1,4 @@
-// colors
-
-$work-bgcolor: lightgreen;
-$rest-bgcolor: lightcoral;
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 
 * {
   margin: 0;
@@ -9,8 +6,9 @@ $rest-bgcolor: lightcoral;
   padding: 0;
 }
 
-body {
-  background-color: $rest-bgcolor;
+html {
+  font-family: "Press Start 2P", system-ui;
+  background-color: whitesmoke;
   color: whitesmoke;
 }
 
@@ -19,19 +17,22 @@ header {
 
   h1 {
     text-transform: uppercase;
+    color: black;
+    padding: 1em;
   }
 }
 
 main {
   margin-top: 20vh;
   .timer-container {
+    background-color: lightsalmon;
     margin-left: auto;
     margin-right: auto;
 
     width: 300px;
     height: 300px;
 
-    border: 3px solid whitesmoke;
+    border: 2px solid lightgray;
     border-radius: 2cap;
 
     display: flex;
@@ -45,7 +46,7 @@ main {
 
     .timer {
       text-align: center;
-      font-size: 4rem;
+      font-size: 2rem;
       letter-spacing: 3px;
     }
 
@@ -54,15 +55,40 @@ main {
       justify-content: space-around;
 
       .btn {
-        width: 70px;
-        height: 50px;
-
         text-align: center;
         line-height: 50px;
         vertical-align: middle;
 
-        border: 1px solid white;
         border-radius: 1cap;
+        font-size: 0.8em;
+
+        padding: 0.7em;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        transform: scale(1.1);
+        transition: ease 1s;
+      }
+
+      .start {
+        display: none;
+        background-color: lightgreen;
+      }
+
+      .stop {
+        display: none;
+        background-color: rgb(247, 187, 75);
+        padding-left: 1.3em;
+        padding-right: 1.3em;
+      }
+
+      .finish {
+        background-color: lightcoral;
+      }
+
+      .active {
+        display: block;
       }
     }
   }

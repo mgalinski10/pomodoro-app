@@ -1,11 +1,13 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
 * {
   margin: 0;
   border: 0;
   padding: 0;
 }
 
-body {
-  background-color: lightcoral;
+html {
+  font-family: "Press Start 2P", system-ui;
+  background-color: whitesmoke;
   color: whitesmoke;
 }
 
@@ -14,17 +16,20 @@ header {
 }
 header h1 {
   text-transform: uppercase;
+  color: black;
+  padding: 1em;
 }
 
 main {
   margin-top: 20vh;
 }
 main .timer-container {
+  background-color: lightsalmon;
   margin-left: auto;
   margin-right: auto;
   width: 300px;
   height: 300px;
-  border: 3px solid whitesmoke;
+  border: 2px solid lightgray;
   border-radius: 2cap;
   display: flex;
   flex-direction: column;
@@ -36,7 +41,7 @@ main .timer-container h2 {
 }
 main .timer-container .timer {
   text-align: center;
-  font-size: 4rem;
+  font-size: 2rem;
   letter-spacing: 3px;
 }
 main .timer-container .buttons {
@@ -44,11 +49,31 @@ main .timer-container .buttons {
   justify-content: space-around;
 }
 main .timer-container .buttons .btn {
-  width: 70px;
-  height: 50px;
   text-align: center;
   line-height: 50px;
   vertical-align: middle;
-  border: 1px solid white;
   border-radius: 1cap;
+  font-size: 0.8em;
+  padding: 0.7em;
+  cursor: pointer;
+}
+main .timer-container .buttons .btn:hover {
+  transform: scale(1.1);
+  transition: ease 1s;
+}
+main .timer-container .buttons .start {
+  display: none;
+  background-color: lightgreen;
+}
+main .timer-container .buttons .stop {
+  display: none;
+  background-color: rgb(247, 187, 75);
+  padding-left: 1.3em;
+  padding-right: 1.3em;
+}
+main .timer-container .buttons .finish {
+  background-color: lightcoral;
+}
+main .timer-container .buttons .active {
+  display: block;
 }/*# sourceMappingURL=style.css.map */
