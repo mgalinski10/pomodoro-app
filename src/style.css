@@ -56,6 +56,8 @@ main .timer-container .buttons .btn {
   font-size: 0.8em;
   padding: 0.7em;
   cursor: pointer;
+  padding-left: 3em;
+  padding-right: 3em;
 }
 main .timer-container .buttons .btn:hover {
   transform: scale(1.1);
@@ -65,13 +67,8 @@ main .timer-container .buttons .start {
   display: none;
   background-color: lightgreen;
 }
-main .timer-container .buttons .stop {
-  display: none;
-  background-color: rgb(247, 187, 75);
-  padding-left: 1.3em;
-  padding-right: 1.3em;
-}
 main .timer-container .buttons .finish {
+  display: none;
   background-color: lightcoral;
 }
 main .timer-container .buttons .active {

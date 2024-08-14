@@ -64,6 +64,9 @@ main {
 
         padding: 0.7em;
         cursor: pointer;
+
+        padding-left: 3em;
+        padding-right: 3em;
       }
 
       .btn:hover {
@@ -76,14 +79,15 @@ main {
         background-color: lightgreen;
       }
 
-      .stop {
-        display: none;
-        background-color: rgb(247, 187, 75);
-        padding-left: 1.3em;
-        padding-right: 1.3em;
-      }
+      //   .stop {
+      //     display: none;
+      //     background-color: rgb(247, 187, 75);
+      //     padding-left: 1.3em;
+      //     padding-right: 1.3em;
+      //   }
 
       .finish {
+        display: none;
         background-color: lightcoral;
       }
 
