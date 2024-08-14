@@ -19,25 +19,19 @@ function toggleButton() {
   }
 }
 
-function toggleBackground() {
-  if (timerContainer.style.backgroundColor === "lightsalmon")
-    timerContainer.style.backgroundColor = "lightblue";
-  else if ((timerContainer.style.backgroundColor = "lighblue"))
-    timerContainer.style.backgroundColor = "lightsalmon";
-}
-
 // Main functions
 
 function startWork() {
-  let minutes = 0;
-  let seconds = 2; // test
+  let minutes = 25;
+  let seconds = 0; // test
 
   timer.textContent = "25 : 00";
+  timerContainer.style.backgroundColor = "lightsalmon";
 
-  countDown = setInterval(function () {
+  const countWork = setInterval(function () {
     if (seconds === 0) {
       if (minutes === 0) {
-        clearInterval(countDown);
+        clearInterval(countWork);
       } else {
         seconds = 59;
         minutes--;
@@ -56,12 +50,10 @@ function startRest() {
   let minutes = 5;
   let seconds = 0;
 
-  timer.textContent = "05 : 00";
-
-  countDown = setInterval(function () {
+  const countRest = setInterval(function () {
     if (seconds === 0) {
       if (minutes === 0) {
-        clearInterval();
+        clearInterval(countRest);
       } else {
         seconds = 59;
         minutes--;
@@ -75,3 +67,13 @@ function startRest() {
     }`;
   }, 1000);
 }
+
+start.addEventListener("click", function () {
+  toggleButton();
+  startWork();
+});
+
+finish.addEventListener("click", function () {
+  toggleButton();
+  clearInterval(countWork);
+});
