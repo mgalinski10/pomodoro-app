@@ -3,77 +3,83 @@ const start = document.querySelector(".start");
 const finish = document.querySelector(".finish");
 const timerContainer = document.querySelector(".timer-container");
 
-function setTimer(minutes) {
-  timer.textContent = `${minutes >= 10 ? minutes : `0${minutes}`} : 00`;
+//  Toggle Functions
+
+function toggleToFinish() {
+  start.classList.remove("active");
+  finish.classList.add("active");
 }
 
-// Toggle functions
+function toggleToStart() {
+  finish.classList.remove("active");
+  start.classList.add("active");
+}
 
-function toggleButton() {
-  if (start.classList.contains("active")) {
-    start.classList.remove("active");
-    finish.classList.add("active");
+// Event Listeners
+
+start.addEventListener("click", toggleToFinish);
+
+finish.addEventListener("click", toggleToStart);
+
+window.addEventListener("load", () => setTimer(25, 0));
+
+// Set timer
+
+function displayTime(minutes, seconds) {
+  if (seconds < 60) {
+    return `${minutes >= 10 ? minutes : `0${minutes}`} : ${
+      seconds >= 10 ? seconds : `0${seconds}`
+    }`;
   } else {
-    finish.classList.remove("active");
-    start.classList.add("active");
+    console.error("seconds have to be lower than 60");
   }
 }
 
-// Main functions
-
-function startWork() {
-  let minutes = 25;
-  let seconds = 0; // test
-
-  timer.textContent = "25 : 00";
-  timerContainer.style.backgroundColor = "lightsalmon";
-
-  const countWork = setInterval(function () {
-    if (seconds === 0) {
-      if (minutes === 0) {
-        clearInterval(countWork);
-      } else {
-        seconds = 59;
-        minutes--;
-      }
-    } else {
-      seconds--;
-    }
-
-    timer.textContent = `${minutes >= 10 ? minutes : `0${minutes}`} : ${
-      seconds >= 10 ? seconds : `0${seconds}`
-    }`;
-  }, 1000);
+function setTimer(minutes, seconds) {
+  timer.textContent = displayTime(minutes, seconds);
 }
 
-function startRest() {
-  let minutes = 5;
+// Start Session -> Start new focus session which is 25min focus, 5min rest
+
+function countDown(countFrom, callback) {
+  let minutes = countFrom;
   let seconds = 0;
 
-  const countRest = setInterval(function () {
-    if (seconds === 0) {
-      if (minutes === 0) {
-        clearInterval(countRest);
-      } else {
-        seconds = 59;
-        minutes--;
-      }
-    } else {
-      seconds--;
-    }
+  setTimer(countFrom, seconds);
 
-    timer.textContent = `${minutes >= 10 ? minutes : `0${minutes}`} : ${
-      seconds >= 10 ? seconds : `0${seconds}`
-    }`;
-  }, 1000);
+  start.addEventListener(
+    "click",
+    function () {
+      const countdown = setInterval(() => {
+        if (seconds === 0) {
+          if (minutes === 0) {
+            toggleToStart();
+            clearInterval(countdown);
+            if (callback) callback();
+          } else {
+            seconds = 59;
+            minutes--;
+          }
+        } else seconds--;
+
+        setTimer(minutes, seconds);
+      }, 1000);
+    },
+    { once: true }
+  );
+
+  finish.addEventListener(
+    "click",
+    function () {
+      clearInterval(countdown);
+      if (callback) callback();
+    },
+    { once: true }
+  );
 }
 
-start.addEventListener("click", function () {
-  toggleButton();
-  startWork();
-});
+function startSession(focusTime, restTime) {
+  countDown(focusTime);
+}
 
-finish.addEventListener("click", function () {
-  toggleButton();
-  clearInterval(countWork);
-});
+startSession(25, 5);
