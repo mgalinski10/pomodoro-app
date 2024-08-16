@@ -1,7 +1,6 @@
 const timer = document.querySelector(".timer");
 const start = document.querySelector(".start");
 const finish = document.querySelector(".finish");
-const timerContainer = document.querySelector(".timer-container");
 
 //  Toggle Functions
 
@@ -41,45 +40,52 @@ function setTimer(minutes, seconds) {
 
 // Start Session -> Start new focus session which is 25min focus, 5min rest
 
-function countDown(countFrom, callback) {
-  let minutes = countFrom;
+function countDown(setMinute, isComplete) {
+  let minutes = setMinute;
   let seconds = 0;
 
-  setTimer(countFrom, seconds);
+  const countdown = setInterval(() => {
+    console.log(minutes, seconds);
+    setTimer(minutes, seconds);
 
-  start.addEventListener(
-    "click",
-    function () {
-      const countdown = setInterval(() => {
-        if (seconds === 0) {
-          if (minutes === 0) {
-            toggleToStart();
-            clearInterval(countdown);
-            if (callback) callback();
-          } else {
-            seconds = 59;
-            minutes--;
-          }
-        } else seconds--;
-
-        setTimer(minutes, seconds);
-      }, 1000);
-    },
-    { once: true }
-  );
-
-  finish.addEventListener(
-    "click",
-    function () {
-      clearInterval(countdown);
-      if (callback) callback();
-    },
-    { once: true }
-  );
+    if (seconds === 0) {
+      if (minutes === 0) {
+        toggleToStart();
+        clearInterval(countdown);
+        isComplete();
+      } else {
+        seconds = 59;
+        minutes--;
+      }
+    } else seconds--;
+  }, 1000);
 }
 
 function startSession(focusTime, restTime) {
-  countDown(focusTime);
+  console.log("start focus");
+  setTimer(25, 0);
+  start.addEventListener(
+    "click",
+    () => {
+      countDown(focusTime, () => {
+        console.log("Koniec focus");
+        console.log("start rest");
+        setTimer(5, 0);
+        start.addEventListener(
+          "click",
+          () => {
+            countDown(restTime, () => {
+              console.log("Ukończono rest");
+              setTimer(25, 0);
+              startSession(focusTime, restTime);
+            });
+          },
+          { once: true }
+        );
+      });
+    },
+    { once: true }
+  );
 }
 
 startSession(25, 5);
