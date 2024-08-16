@@ -18,8 +18,6 @@ function toggleToStart() {
   start.classList.add("active");
 }
 
-// Event Listeners
-
 // Set timer
 
 function displayTime(minutes, seconds) {
@@ -40,7 +38,7 @@ function setTimer(minutes, seconds) {
 
 function countDown(setMinute, callback) {
   let minutes = setMinute;
-  let seconds = 3;
+  let seconds = 0;
 
   countdown = setInterval(() => {
     if (seconds === 0) {
@@ -79,7 +77,7 @@ function startSession(focus, rest, nextSession) {
             countDown(rest, () => {
               console.log("Ukończono rest");
               setTimer(25, 0);
-              startSession(0, 0);
+              startSession(25, 5);
             });
           },
           { once: true }
@@ -94,13 +92,9 @@ function finishInterval() {
   toggleToStart();
   clearInterval(countdown);
   console.log("Zatrzymano Timer..");
-  startSession(0, 0);
+  startSession(25, 5);
 }
 
-// startSession(0, 0, () =>
-//   startSession(0, 0, () =>
-//     startSession(0, 0, () => alert("Make longer brake or refresh the page :)"))
-//   )
-// );
+// Run App
 
-startSession(0, 0);
+startSession(25, 5);
