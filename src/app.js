@@ -2,6 +2,10 @@ const timer = document.querySelector(".timer");
 const start = document.querySelector(".start");
 const finish = document.querySelector(".finish");
 
+// Main CountDown declaration
+
+let countdown;
+
 //  Toggle Functions
 
 function toggleToFinish() {
@@ -15,12 +19,6 @@ function toggleToStart() {
 }
 
 // Event Listeners
-
-start.addEventListener("click", toggleToFinish);
-
-finish.addEventListener("click", toggleToStart);
-
-window.addEventListener("load", () => setTimer(25, 0));
 
 // Set timer
 
@@ -40,44 +38,48 @@ function setTimer(minutes, seconds) {
 
 // Start Session -> Start new focus session which is 25min focus, 5min rest
 
-function countDown(setMinute, isComplete) {
+function countDown(setMinute, callback) {
   let minutes = setMinute;
-  let seconds = 0;
+  let seconds = 3;
 
-  const countdown = setInterval(() => {
-    console.log(minutes, seconds);
-    setTimer(minutes, seconds);
-
+  countdown = setInterval(() => {
     if (seconds === 0) {
       if (minutes === 0) {
         toggleToStart();
         clearInterval(countdown);
-        isComplete();
+        return callback();
       } else {
         seconds = 59;
         minutes--;
       }
     } else seconds--;
+
+    setTimer(minutes, seconds);
   }, 1000);
 }
 
-function startSession(focusTime, restTime) {
-  console.log("start focus");
+function startSession(focus, rest, nextSession) {
+  finish.addEventListener("click", finishInterval, { once: true });
   setTimer(25, 0);
+  console.log("Oczekiwanie na start");
   start.addEventListener(
     "click",
     () => {
-      countDown(focusTime, () => {
-        console.log("Koniec focus");
-        console.log("start rest");
+      toggleToFinish();
+      console.log("Rozpoczęto focus");
+      countDown(focus, () => {
+        console.log("Zakończono focus");
         setTimer(5, 0);
+        console.log("Oczekiwanie na rest");
         start.addEventListener(
           "click",
           () => {
-            countDown(restTime, () => {
+            toggleToFinish();
+            console.log("Rozpoczęto rest");
+            countDown(rest, () => {
               console.log("Ukończono rest");
               setTimer(25, 0);
-              startSession(focusTime, restTime);
+              startSession(0, 0);
             });
           },
           { once: true }
@@ -88,4 +90,17 @@ function startSession(focusTime, restTime) {
   );
 }
 
-startSession(25, 5);
+function finishInterval() {
+  toggleToStart();
+  clearInterval(countdown);
+  console.log("Zatrzymano Timer..");
+  startSession(0, 0);
+}
+
+// startSession(0, 0, () =>
+//   startSession(0, 0, () =>
+//     startSession(0, 0, () => alert("Make longer brake or refresh the page :)"))
+//   )
+// );
+
+startSession(0, 0);
