@@ -56,7 +56,7 @@ function countDown(setMinute, callback) {
   }, 1000);
 }
 
-function startSession(focus, rest, nextSession) {
+function startSession(focus, rest) {
   finish.addEventListener("click", finishInterval, { once: true });
   setTimer(25, 0);
   console.log("Oczekiwanie na start");
