@@ -53,6 +53,7 @@ function countDown(setMinute, callback) {
     } else seconds--;
 
     setTimer(minutes, seconds);
+    document.title = `Pomodoro focus - ${displayTime(minutes, seconds)}`;
   }, 1000);
 }
 
@@ -92,6 +93,7 @@ function finishInterval() {
   toggleToStart();
   clearInterval(countdown);
   console.log("Zatrzymano Timer..");
+  document.title = "Pomodoro Timer";
   startSession(25, 5);
 }
 
