@@ -4,3 +4,5 @@ In this project I made a Pomodoro Timer, which helps me to be be focused while I
 
 Overall, I belive my timer has nice and simple design and works properly. 
 
+
+![Screenshot 2024-08-17 at 11 04 42](https://github.com/user-attachments/assets/edb91879-a151-45f1-abd9-356da0a892cc)
